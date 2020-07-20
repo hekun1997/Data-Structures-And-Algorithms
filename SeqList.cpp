@@ -58,7 +58,7 @@ int LocateElem(SeqList l, int e)
     return 0;
 }
 
-int DeleteMinElemAndReplaceWithLastElem(SeqList l, int &e)
+int DeleteMinElemAndReplaceWithLastElem(SeqList l,int i, int &e)
 {
     if (l.length == 0 || i < 1 || i > l.length)
     {
