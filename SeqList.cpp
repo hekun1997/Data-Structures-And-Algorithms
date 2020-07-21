@@ -58,11 +58,12 @@ int LocateElem(SeqList l, int e)
     return 0;
 }
 
-int DeleteMinElemAndReplaceWithLastElem(SeqList l,int i, int &e)
+//1.
+bool DeleteMinElemAndReplaceWithLastElem(SeqList l,int i, int &e)
 {
     if (l.length == 0 || i < 1 || i > l.length)
     {
-        return 0;//throw error.
+        return false;//throw error.
     }
     int index = 0;
     int minElem = l.data[0];
@@ -77,24 +78,103 @@ int DeleteMinElemAndReplaceWithLastElem(SeqList l,int i, int &e)
 
     e = l.data[i];
 
-    l.data[i] = l.data[l.length];
+    l.data[i] = l.data[l.length-1];
     l.length--;
-    return e;
+    return true;
 }
-
-void reverse(SeqList l) {
-    if (l.length == 0)
-    {
-        return;
-    }
-
-    for (int i = l.length/2; i < l.length; i++)
+//2.
+void reverse(SeqList &l) {
+    for (int i = l.length/2, j = 0; i < l.length && j <= i; i++, j ++)
     {
         int temp = l.data[i];
-        l.data[i] = l.data[];
+        l.data[i] = l.data[j];
+        l.data[j] = l.data[i];
     }
 }
+//3.对长度为 的顺序表 ，编写一个时间复杂度为 O(n 、空间复杂度为 0(1 ）的算法 该算
+//法删除线性表中所有值为x 的数据元素
+void DeleteX(SeqList &l, int x){
+    int k = 0;
+    for (int i = 0; i < l.length; i ++)
+    {
+        if (l.data[i] != x)
+        {
+            l.data[k] = l.data[i];
+            k++;
+        }
+    }
+    l.length = k;
+} 
+//4. 删除s-t之间的元素  1 5 9 8 7- 4- 1- 2 3 // 9 4-8
+bool DeleteBewteenSAndT(SeqList &l, int s, int t){
+    int i, j;
+    if(l.length = 0 || s >= t){
+        return;
+    }
+    for (i = 0; i < l.length && l.data[i] < s; i ++);
+    if (i >= l.length)
+    {
+        return false;
+    }
 
+    for (j = 0; i < l.length && l.data[i] > t; j ++);
+    if (i >= l.length)
+    {
+        return false;
+    }
+    for (; j < l.length;i ++, j++)
+    {
+        l.data[i] = l.data[j];
+    }
+    l.length = i;
+    return true;
+}
+//6.从有序顺序表中删除所有其值重复的元素，使表中所有元素的值均不同
+bool DeleteRepate(SeqList &l){
+    if (l.length == 0)
+    {
+        return false;
+    }
+    int i, j;
+    for (int i = 0, j = 1; j < l.length; j++)
+    {
+        if (l.data[i] != l.data[j])
+        {
+            l.data[++i] = l.data[j];
+        }
+    }
+    l.length = i + 1;
+    return true;
+}
+//7.将两个有序顺序表合并为一个新的有序顺序表，并 函数返回结果顺序表
+bool mergeList(SeqList a, SeqList b, SeqList &c){
+    if (a.length + b.length > c.maxSize){
+        return false;
+    }
+    int i = 0, j = 0, k = 0;
+    while (i < a.length && j < b.length)
+    {
+        if (a.data[i] <= b.data[j])
+        {
+            c.data[k++] = a.data[i++];
+        }else
+        {
+            c.data[k++] = b.data[j++];
+        }
+    }
+    while (i < a.length)
+    {
+        c.data[k++] = a.data[i++];
+    }
+    while (j < b.length)
+    {
+        c.data[k++] = b.data[j++];
+    }
+
+    c.length = k;
+    return true;
+}
+//8. (a, )
 int main()
 {
     SeqList l;
