@@ -597,8 +597,28 @@ ElemType absolute(ElemType data){
 }
 
 //24 设计一个算法完成以下功能:判断一个链表是否有环,如果有,找出环的入口点并返回,否则返回NULL.
-LNode findCircl(LinkList &l){
-    
+LNode *findCircl(LinkList &L){
+    LNode *p = L, *q = L;
+    while (q->next!=NULL&&p!=NULL)
+    {
+        p = p->next;
+        q = q->next->next;
+        if (p==q)
+        {
+            break;
+        }
+    }
+    if (p==NULL || q->next == NULL)
+    {
+        return NULL;
+    }
+    LNode *p1 = L, *p2 = p;
+    while (p1 != p2)
+    {
+        p1 = p1->next;
+        p2 = p2->next;
+    }
+    return p1;
 }
 
 //25 设线性表L=(a1,a2,a3,....an-2,an-1,an)采用带头结点的单链表保存,链表中的结点定义如下:
@@ -622,7 +642,7 @@ LinkList subject25(LinkList &L){
     p->next = NULL;
     while (q!=NULL)//原地逆置
     {
-        r = q->next;
+        r = q->next;// q 
         q->next = p->next;
         p->next = q;
         q = r;
@@ -639,4 +659,35 @@ LinkList subject25(LinkList &L){
         q = r;
     }
     
+}
+//原地逆置
+LinkList ReverseInPlace(LinkList &L){
+    LNode *p, *q, *r;
+    p = L;
+    q = p->next;
+    r = q;
+    p->next = NULL;
+    while (q!=NULL)
+    {
+        r = q->next;
+        q->next = p->next;
+        p->next = q;
+        q = r;
+    }
+    
+}
+
+//到中间结点
+void skipToMid(LinkList &L){
+    LNode *p = L->next, *q = L->next;
+    while (q!=NULL)
+    {
+        p = p->next;
+        q = q->next;
+        if (q->next !=NULL)
+        {
+            q = q->next;
+        }
+    }
+    //最终p就是链表的中间节点，q就是链表的尾结点
 }
