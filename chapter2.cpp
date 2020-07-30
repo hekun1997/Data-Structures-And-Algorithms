@@ -310,7 +310,7 @@ void printMin(LinkList &L){
             }
         }
         LNode *p = pre->next;
-        print(p->data);
+        //print(p->data);
         pre->next = pre->next->next;
         free(p);
     }
@@ -405,7 +405,8 @@ LinkList merge(LinkList &A, LinkList &B){
 
 //14 设A和B是两个单链表(带头结点),其中元素递增有序。设计一个算法从A和B中的公共元素产生单链表C,要求不破坏A,B的结点。
 LinkList Question14(LinkList &A, LinkList &B){
-    LinkList &C = (LinkList)malloc(sizeof(LNode));
+    LinkList &C;
+    C= (LinkList *)malloc(sizeof(LNode));
     LNode *a = A, *b = B, *c = C;
     while (a!=NULL)
     {
