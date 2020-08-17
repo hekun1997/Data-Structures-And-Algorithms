@@ -61,7 +61,7 @@ int LocateElem(SeqList l, int e)
 }
 
 //1.
-bool DeleteMinElemAndReplaceWithLastElem(SeqList l,int i, int &e)
+bool Solve1(SeqList l,int i, int &e)
 {
     if (l.length == 0 || i < 1 || i > l.length)
     {
@@ -108,7 +108,7 @@ void DeleteX(SeqList &l, int x){
     l.length = k;
 } 
 //4. 删除s-t之间的元素  1 5 9 8 7- 4- 1- 2 3 // 9 4-8
-bool DeleteBewteenSAndT(SeqList &l, int s, int t){
+bool Solve4(SeqList &l, int s, int t){
     int i, j;
     if(l.length = 0 || s >= t){
         return;
@@ -132,7 +132,7 @@ bool DeleteBewteenSAndT(SeqList &l, int s, int t){
     return true;
 }
 //6.从有序顺序表中删除所有其值重复的元素，使表中所有元素的值均不同
-bool DeleteRepate(SeqList &l){
+bool Solve6(SeqList &l){
     if (l.length == 0)
     {
         return false;

@@ -64,7 +64,7 @@ typedef struct
     int front, rear;
 }SqQueue;
 //队空条件 Q.front = Q.rear = 0;（初始时）
-//循环队列 初始时：Q.front = Q.rear = 0;
+//循环队列 初始时：Q.front = Q.rear = 0; 
 //队空条件 Qfront = Q.rear
 //队列长度 (Q.rear + MaxSize - Q.rear)
 void initQueue(SqQueue &Q){
@@ -121,3 +121,21 @@ void EnQueue(LinkQueue &Q, ElemType x){
     Q.rear->next = s;
     Q.rear = s;
 }
+bool DeQueue(LinkQueue &Q, ElemType &x){
+    if (Q.rear == Q.front)
+    {
+        return false;
+    }
+    LinkNode *p = Q.front->next;
+    x = p->data;
+    Q.front->next = P->next;
+    if(p == Q.rear)
+        Q.front = Q.rear;
+    free(p);
+    return true;
+}   
+//队满时 (Q.rear+1)%MaxSize = Q.front  
+// a b c d , d c a b (d c从后端出来，a b 从前端出来)
+// A B D B C C B D C B B 12  A A D C C C 
+// 
+// 8 4 2 5 3 9 1 6 7，最后得到1-9
