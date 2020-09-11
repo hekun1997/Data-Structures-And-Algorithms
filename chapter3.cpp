@@ -4,138 +4,87 @@
 
 #define MaxSize 50
 #define ElemType int
-typedef struct
-{
+
+typedef struct{
     ElemType data[MaxSize];
     int top;
-}SeqStack;
+} SqStack;
 
-//init
-void InitStack(SeqStack &s){
-    s.top = -1;
+void InitSqStack(SqStack &S){
+    S.top = -1;
 }
 
-//isEmpty
-bool StackEmpty(SeqStack &S){
+bool StackElpty(SqStack S){
     if(S.top == -1){
         return true;
     }
     return false;
 }
 
-bool Push(SeqStack &S, ElemType x){
-    if (S.top = MaxSize -1)
-    {
+bool Push(SqStack &S, ElemType x){
+    if(S.top == MaxSize-1){
         return false;
     }
     S.data[++S.top] = x;
     return true;
 }
 
-bool Pop(SeqStack &S, ElemType &x){
-    if (S.top == -1)
-    {
+bool Pop(SqStack S, ElemType e){
+    if(S.top == -1)
         return false;
-    }
-    x = S.data[S.top --];
-    return true;
-}
- 
-bool GetTop(SeqStack &S, ElemType &x){
-    if (S.top == -1)
-    {
-        return false;
-    }
-    x = S.data[S.top];
+    e = S.data[S.top--];
     return true;
 }
 
-typedef struct Linklone
+typedef struct Linknode
 {
     ElemType data;
     struct Linknode *next;
-}*LiStack;
-//C C B C A B B C D A C D D D B C D D C C 21C  B A B B C A 3 (能， 不能，DB相邻了) （A C D 进栈+1，出栈-1，为负数报错）
-//若元素的进栈序列为A, B, C,D,E,运用栈操作,能否得到出栈序列B, C, A, E, D和D, B,"A,C, E? 为什么?
+} *LiStack;
 
-typedef struct
-{
+typedef struct{
     ElemType data[MaxSize];
     int front, rear;
-}SqQueue;
-//队空条件 Q.front = Q.rear = 0;（初始时）
-//循环队列 初始时：Q.front = Q.rear = 0; 
-//队空条件 Qfront = Q.rear
-//队列长度 (Q.rear + MaxSize - Q.rear)
-void initQueue(SqQueue &Q){
-    Q.rear = Q.front = 0;
-}
+} SqQueue;
 
-//队空
-bool isEmpty(SqQueue Q){
-    if (Q.rear == Q.front)
-        return true;
-    return false;
-}
-
-//入队
-bool EnQueue(SqQueue Q, ElemType x){
-    if ((Q.rear + 1) % MaxSize == Q.front)
-        return false;
-    Q.data[Q.rear] = x;
-    Q.rear = (Q.rear + 1) % MaxSize;
-    return true;
-}
-//出队
-bool DeQueue(SqQueue &Q, ElemType &x){
-    if (Q.rear == Q.front)
-        return false;
-    x = Q.data[Q.front];
-    Q.front = (Q.front + 1) % MaxSize;
-    return true;
-}
 typedef struct{
     ElemType data;
     struct LinkNode *next;
-} LinkNode;
+} *LinkNode;
 typedef struct{
     LinkNode *front, *rear;
-}LinkQueue;
+} LinkQueue;
 
-//队列为空时 Q.front = Q.rear = NULL
-void initQueue(LinkQueue Q){
+void InitQueue(LinkQueue &Q){
     Q.front = Q.rear = (LinkNode *)malloc(sizeof(LinkNode));
-    Q.front->next = NULL;
+    LinkNode *front = Q.front;
+    front.next = NULL;
 }
-bool isEmpty(LinkQueue Q){
+
+bool IsEmpty(LinkQueue Q){
     if (Q.front == Q.rear)
-    {
         return true;
-    }
     return false;
 }
-void EnQueue(LinkQueue &Q, ElemType x){
+
+void EnQueue(LinkQueue &Q, ElemType e){
     LinkNode *s = (LinkNode *)malloc(sizeof(LinkNode));
-    s->data = x;
-    s->next = NULL;
+    s.data = e;
     Q.rear->next = s;
+    s.next = NULL;
     Q.rear = s;
 }
+
 bool DeQueue(LinkQueue &Q, ElemType &x){
-    if (Q.rear == Q.front)
-    {
+    if (Q.front == Q.rear)
         return false;
-    }
     LinkNode *p = Q.front->next;
     x = p->data;
-    Q.front->next = P->next;
-    if(p == Q.rear)
-        Q.front = Q.rear;
+    Q.front->next = p->next;
+    if(Q.rear == p)
+        Q.rear = Q.front;
     free(p);
     return true;
-}   
-//队满时 (Q.rear+1)%MaxSize = Q.front  
-// a b c d , d c a b (d c从后端出来，a b 从前端出来)
-// A B D B C C B D C B B 12  A A D C C C 
-// 
-// 8 4 2 5 3 9 1 6 7，最后得到1-9
+}
+
+ 
