@@ -43,6 +43,56 @@ void PostOrder(BiTree T){
 }
 //上述遍历时间复杂度都为O（n
 
+//层次遍历
+void LevelOrder(BiTree T){
+    InitQueue(Q);
+    BiTree p;
+    EnQueue(Q, T);
+    while(!IsEmpty(Q)){
+        DeQueue(Q);
+        visit(p);
+        if(p->lchild != NULL){
+            EnQueue(Q, p->lchild);
+        }
+        if(p->rchild != NULL)
+            EnQueue(Q, p->rchild);
+    }
+}
+
+typedef struct ThreadNode
+{
+    Elemtype data;
+    struct ThreadNode *lchild, *rchild;
+    int ltag, rtag;
+}ThreadNode, *ThreadTree;
+
+void InThread(ThreadTree &p, ThreadTree &pre){
+    if(p!=NULL){
+        InThread(p->lchild, pre);
+        if (p->lchild==NULL)
+        {
+            p->rchild = pre;
+            p->ltag = 1;
+        }
+        if (pre!=NULL && pre->rchild==NULL)
+        {
+            pre->rchild = p;
+            pre->rtag = 1;
+        }
+        pre = p;
+        InThread(p->rchild, pre);
+    }
+}
+
+void CreateInThread(ThreadTree T){
+    ThreadTree pre = NULL;
+    if(T != NULL){
+        InThread(T, pre);
+        pre->rchild = NULL;
+        pre->rtag = 1;
+    }
+}
+
 #define MAX_TREE__SIZE 100
 typedef struct{
     Elemtype data;
