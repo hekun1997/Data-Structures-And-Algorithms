@@ -25,6 +25,23 @@ DLinkList createList(){
     return L;
 }
 
+void delNode(DLinkList L, ElemType e){
+    DNode *p = L->next, *prior, *next;
+    while (p)
+    {
+        if(p->data == e){
+            prior = p->prior;
+            next = p->next;
+
+            prior->next = next;
+            next->prior = prior;
+            //need free.
+        }
+        p = p->next;
+    }
+    
+}
+
 int main(){
     DLinkList L = createList();
 
