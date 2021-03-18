@@ -3,11 +3,12 @@
 #include <stdbool.h>
 
 #define ElemType int
+#define KeyType int
 
 typedef struct BiTNode{
     ElemType data;
     struct BiTNode *lChild, *rChild;
-} BiTNode, *BiTree;
+} BiTNode, BSTNode, *BiTree;
 
 void PreOrder(BiTree T){
     if(T){
@@ -45,4 +46,40 @@ void LevelOrder(BiTree T){
     //     if(p->rChild != NULL)
     //         EnQueue(Q, p->rChild);
     // }
+}
+
+BSTNode *BST_Search(BiTree T, ElemType key){
+    while (T != NULL && key != T->data)
+    {
+        if(key < T->data)
+            T = T->lChild;
+        else
+            T = T->rChild;
+    }
+    return T;
+}
+
+bool BST_Insert(BiTree T, KeyType k){
+    if(T == NULL){
+        T = (BiTree)malloc(sizeof(BSTNode));
+        T->data = k;
+        T->lChild = T->rChild = NULL;
+        return true;
+    }else if(T->data == k){
+        return false;
+    }else if(k < T->data){
+        return BST_Insert(T->lChild, k);
+    }else{
+        return BST_Insert(T->rChild, k);
+    }
+}
+
+BiTree createBiTree(KeyType k[], int n){
+    BiTree T = NULL;
+    int i = 0;
+    while(i < n){
+        BST_Insert(T, k[i]);
+        i++;
+    }
+    return T;
 }
